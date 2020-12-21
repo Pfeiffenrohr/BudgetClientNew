@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editText8"
+        android:id="@+id/Betrag"
         android:layout_width="185dp"
         android:layout_height="55dp"
         android:layout_marginStart="185dp"
@@ -29,8 +29,7 @@
         android:layout_marginTop="52dp"
         android:ems="10"
         android:importantForAutofill="no"
-        android:inputType="textPersonName"
-        android:text="@string/name"
+        android:inputType="numberDecimal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
