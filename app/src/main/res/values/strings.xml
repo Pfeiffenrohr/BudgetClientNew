@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">BudgetClient</string>
+    <string name="transaktion">Transaktion</string>
+    <string name="button">Button2</string>
+    <string name="name1">Name</string>
+    <string name="button3">Button</string>
+    <string name="textview">Transaktion</string>
+    <string name="nameTransaktion" />
+    <string name="textBetrag">Betrag</string>
+    <string name="name">Name</string>
+    <string name="kategorie">Kategorie</string>
+</resources>
