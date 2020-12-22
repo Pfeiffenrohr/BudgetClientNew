@@ -10,4 +10,11 @@
     <string name="name">Name</string>
     <string name="kategorie">Kategorie</string>
     <string name="kontotext">Konto</string>
+    <string name="speichern">Speichern</string>
+    <string-array name="konten">
+        <item>Item One</item>
+        <item>Item Two</item>
+        <item>Item Three</item>
+    </string-array>
+
 </resources>
