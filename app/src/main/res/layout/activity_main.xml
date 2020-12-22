@@ -7,7 +7,7 @@
     tools:context=".MainActivity">
 
     <EditText
-        android:id="@+id/TextTransaktion"
+        android:id="@+id/TransaktionField"
         android:layout_width="185dp"
         android:layout_height="55dp"
         android:layout_marginStart="185dp"
@@ -21,20 +21,18 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/Betrag"
+        android:id="@+id/BetragField"
         android:layout_width="185dp"
         android:layout_height="55dp"
         android:layout_marginStart="185dp"
         android:layout_marginLeft="185dp"
-        android:layout_marginTop="52dp"
-        android:ems="10"
-        android:importantForAutofill="no"
-        android:inputType="numberDecimal"
+        android:layout_marginTop="56dp"
+        android:autofillHints=""
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Spinner
-        android:id="@+id/spinner2"
+        android:id="@+id/categorieChoice"
         android:layout_width="185dp"
         android:layout_height="55dp"
         android:layout_marginStart="185dp"
@@ -44,7 +42,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/Transaktion"
+        android:id="@+id/TransaktionText"
         android:layout_width="185dp"
         android:layout_height="55dp"
         android:gravity="center"
@@ -65,13 +63,46 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textBetrag"
+        android:id="@+id/BetragText"
         android:layout_width="185dp"
         android:layout_height="55dp"
         android:layout_marginTop="52dp"
         android:gravity="center"
         android:text="@string/textBetrag"
         android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/KontoText"
+        android:layout_width="185dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginLeft="3dp"
+        android:layout_marginTop="162dp"
+        android:gravity="center"
+        android:text="@string/kontotext"
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/KontoField"
+        android:layout_width="185dp"
+        android:layout_height="55dp"
+        android:layout_marginLeft="185dp"
+        android:layout_marginTop="162dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="161dp"
+        android:layout_marginLeft="161dp"
+        android:layout_marginTop="237dp"
+        android:text="Speichern"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
