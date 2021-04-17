@@ -1,0 +1,727 @@
+---
+swagger: '2.0'
+info:
+  description: Api Documentation
+  version: '1.0'
+  title: Api Documentation
+  termsOfService: urn:tos
+  contact: {}
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0
+host: 192.168.2.29:8092
+basePath: "/"
+tags:
+  - name: bon-controller
+    description: Bon Controller
+  - name: categorie-controller
+    description: Categorie Controller
+  - name: konto-controller
+    description: Konto Controller
+  - name: transaction-controller
+    description: Transaction Controller
+paths:
+  "/bon":
+    post:
+      tags:
+        - bon-controller
+      summary: addBon
+      operationId: addBonUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - "*/*"
+      parameters:
+        - in: body
+          name: bon
+          description: bon
+          required: true
+          schema:
+            "$ref": "#/definitions/Bon"
+      responses:
+        '200':
+          description: OK
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+    put:
+      tags:
+        - bon-controller
+      summary: updateBon
+      operationId: updateBonUsingPUT
+      consumes:
+        - application/json
+      produces:
+        - "*/*"
+      parameters:
+        - in: body
+          name: bon
+          description: bon
+          required: true
+          schema:
+            "$ref": "#/definitions/Bon"
+      responses:
+        '200':
+          description: OK
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  "/bons":
+    get:
+      tags:
+        - bon-controller
+      summary: getAll
+      operationId: getAllUsingGET
+      produces:
+        - "*/*"
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              "$ref": "#/definitions/Bon"
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  "/categories":
+    get:
+      tags:
+        - categorie-controller
+      summary: getAll
+      operationId: getAllUsingGET_1
+      produces:
+        - "*/*"
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              "$ref": "#/definitions/Categorie"
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+    post:
+      tags:
+        - categorie-controller
+      summary: addCategorie
+      operationId: addCategorieUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - "*/*"
+      parameters:
+        - in: body
+          name: Categorie
+          description: Categorie
+          required: true
+          schema:
+            "$ref": "#/definitions/Categorie"
+      responses:
+        '200':
+          description: OK
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+    put:
+      tags:
+        - categorie-controller
+      summary: updateCategorie
+      operationId: updateCategorieUsingPUT
+      consumes:
+        - application/json
+      produces:
+        - "*/*"
+      parameters:
+        - in: body
+          name: Categorie
+          description: Categorie
+          required: true
+          schema:
+            "$ref": "#/definitions/Categorie"
+      responses:
+        '200':
+          description: OK
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  "/hi":
+    get:
+      tags:
+        - transaction-controller
+      summary: sayHi
+      operationId: sayHiUsingGET_3
+      produces:
+        - "*/*"
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: string
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  "/hiBon":
+    get:
+      tags:
+        - bon-controller
+      summary: sayHi
+      operationId: sayHiUsingGET
+      produces:
+        - "*/*"
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: string
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  "/hiCategorie":
+    get:
+      tags:
+        - categorie-controller
+      summary: sayHi
+      operationId: sayHiUsingGET_1
+      produces:
+        - "*/*"
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: string
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  "/hiKonto":
+    get:
+      tags:
+        - konto-controller
+      summary: sayHi
+      operationId: sayHiUsingGET_2
+      produces:
+        - "*/*"
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: string
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  "/kontos":
+    get:
+      tags:
+        - konto-controller
+      summary: getAll
+      operationId: getAllUsingGET_2
+      produces:
+        - "*/*"
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              "$ref": "#/definitions/Konto"
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+    post:
+      tags:
+        - konto-controller
+      summary: addKonto
+      operationId: addKontoUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - "*/*"
+      parameters:
+        - in: body
+          name: konto
+          description: konto
+          required: true
+          schema:
+            "$ref": "#/definitions/Konto"
+      responses:
+        '200':
+          description: OK
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+    put:
+      tags:
+        - konto-controller
+      summary: updateKonto
+      operationId: updateKontoUsingPUT
+      consumes:
+        - application/json
+      produces:
+        - "*/*"
+      parameters:
+        - in: body
+          name: konto
+          description: konto
+          required: true
+          schema:
+            "$ref": "#/definitions/Konto"
+      responses:
+        '200':
+          description: OK
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  "/transaction":
+    post:
+      tags:
+        - transaction-controller
+      summary: addTransaction
+      operationId: addTransactionUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - "*/*"
+      parameters:
+        - in: body
+          name: transaction
+          description: transaction
+          required: true
+          schema:
+            "$ref": "#/definitions/Transaction"
+      responses:
+        '200':
+          description: OK
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+    put:
+      tags:
+        - transaction-controller
+      summary: updateTransaction
+      operationId: updateTransactionUsingPUT
+      consumes:
+        - application/json
+      produces:
+        - "*/*"
+      parameters:
+        - in: body
+          name: transaction
+          description: transaction
+          required: true
+          schema:
+            "$ref": "#/definitions/Transaction"
+      responses:
+        '200':
+          description: OK
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  "/transaction_get_sum":
+    get:
+      tags:
+        - transaction-controller
+      summary: updateFoos
+      operationId: updateFoosUsingGET
+      produces:
+        - "*/*"
+      parameters:
+        - name: allParams
+          in: query
+          description: allParams
+          required: true
+          items:
+            type: object
+            additionalProperties:
+              type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: string
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+    head:
+      tags:
+        - transaction-controller
+      summary: updateFoos
+      operationId: updateFoosUsingHEAD
+      consumes:
+        - application/json
+      produces:
+        - "*/*"
+      parameters:
+        - name: allParams
+          in: query
+          description: allParams
+          required: true
+          items:
+            type: object
+            additionalProperties:
+              type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: string
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+      deprecated: false
+    post:
+      tags:
+        - transaction-controller
+      summary: updateFoos
+      operationId: updateFoosUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - "*/*"
+      parameters:
+        - name: allParams
+          in: query
+          description: allParams
+          required: true
+          items:
+            type: object
+            additionalProperties:
+              type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: string
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+    put:
+      tags:
+        - transaction-controller
+      summary: updateFoos
+      operationId: updateFoosUsingPUT
+      consumes:
+        - application/json
+      produces:
+        - "*/*"
+      parameters:
+        - name: allParams
+          in: query
+          description: allParams
+          required: true
+          items:
+            type: object
+            additionalProperties:
+              type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: string
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+    delete:
+      tags:
+        - transaction-controller
+      summary: updateFoos
+      operationId: updateFoosUsingDELETE
+      produces:
+        - "*/*"
+      parameters:
+        - name: allParams
+          in: query
+          description: allParams
+          required: true
+          items:
+            type: object
+            additionalProperties:
+              type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: string
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+      deprecated: false
+    options:
+      tags:
+        - transaction-controller
+      summary: updateFoos
+      operationId: updateFoosUsingOPTIONS
+      consumes:
+        - application/json
+      produces:
+        - "*/*"
+      parameters:
+        - name: allParams
+          in: query
+          description: allParams
+          required: true
+          items:
+            type: object
+            additionalProperties:
+              type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: string
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+      deprecated: false
+    patch:
+      tags:
+        - transaction-controller
+      summary: updateFoos
+      operationId: updateFoosUsingPATCH
+      consumes:
+        - application/json
+      produces:
+        - "*/*"
+      parameters:
+        - name: allParams
+          in: query
+          description: allParams
+          required: true
+          items:
+            type: object
+            additionalProperties:
+              type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: string
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+      deprecated: false
+  "/transactions":
+    get:
+      tags:
+        - transaction-controller
+      summary: getAll
+      operationId: getAllUsingGET_3
+      produces:
+        - "*/*"
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              "$ref": "#/definitions/Transaction"
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+definitions:
+  Bon:
+    type: object
+    properties:
+      category:
+        type: integer
+        format: int32
+      company:
+        type: string
+      id:
+        type: integer
+        format: int32
+      internalname:
+        type: string
+      rawname:
+        type: string
+      rawnameMutant:
+        type: string
+    title: Bon
+  Categorie:
+    type: object
+    properties:
+      active:
+        type: integer
+        format: int32
+      description:
+        type: string
+      forecast:
+        type: integer
+        format: int32
+      id:
+        type: integer
+        format: int32
+      limit_month:
+        type: number
+        format: double
+      limit_year:
+        type: number
+        format: double
+      mode:
+        type: string
+      name:
+        type: string
+      parent:
+        type: string
+    title: Categorie
+  Konto:
+    type: object
+    properties:
+      description:
+        type: string
+      hidden:
+        type: string
+      id:
+        type: integer
+        format: int32
+      kontoname:
+        type: string
+      lowerlimit:
+        type: number
+        format: double
+      mode:
+        type: string
+      upperlimit:
+        type: number
+        format: double
+    title: Konto
+  Transaction:
+    type: object
+    properties:
+      beschreibung:
+        type: string
+      cycle:
+        type: integer
+        format: int32
+      datum:
+        type: string
+      id:
+        type: integer
+        format: int32
+      kategorie:
+        type: integer
+        format: int32
+      konto_id:
+        type: integer
+        format: int32
+      kor_id:
+        type: integer
+        format: int32
+      name:
+        type: string
+      partner:
+        type: string
+      planed:
+        type: string
+      wert:
+        type: number
+        format: double
+    title: Transaction

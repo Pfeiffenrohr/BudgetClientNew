@@ -8,7 +8,8 @@ buildscript {
         
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.1.1'
+        classpath 'com.android.tools.build:gradle:4.1.3'
+        classpath('io.swagger.codegen.v3:swagger-codegen-maven-plugin:3.0.16')
         
 
         // NOTE: Do not place your application dependencies here; they belong
@@ -16,14 +17,38 @@ buildscript {
     }
 }
 
+plugins {
+    id 'org.openapi.generator' version '4.3.1'
+
+}
+openApiGenerate {
+    generatorName = "java"
+    inputSpec = "$rootDir/app/src/main/assets/budget.yaml".toString()
+    outputDir = "$rootDir/generated/".toString()
+    skipValidateSpec = true
+    apiPackage = "de.lechner.swagger.api"
+    invokerPackage = "de.lechner.swagger.invocer"
+    modelPackage = "de.lechner.swagger.model"
+    configOptions = [
+            dateLibrary: "java8-localdatetime"
+    ]
+
+}
+
 allprojects {
     repositories {
         google()
         jcenter()
-        
     }
 }
 
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+task mytask {
+    doLast {
+        println 'Hello Richard'
+    }
+}
+
