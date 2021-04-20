@@ -44,6 +44,7 @@ public class MainActivity<spinnerAdapter> extends AppCompatActivity {
    private PropertyReader propertyReader;
     private Context context;
     private Properties properties;
+    private List<Konto> kontolist;
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +57,7 @@ public class MainActivity<spinnerAdapter> extends AppCompatActivity {
         properties = propertyReader.getMyProperties("budget.properties");
         this.baseurl=properties.getProperty("url");
         getKonten(baseurl);
+        getKontenFavorits(baseurl);
         getCategories(baseurl);
     }
 
@@ -79,14 +81,14 @@ public void getKonten(String baseurl){
     StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
         @Override
         public void onResponse(String response) {
-            // Log.d("budgetserver",response);
+            Log.d("budgetserver","getKonten");
             List<Konto> outputList;
             Gson gson = new Gson();
             Type listOfMyClassObject = new TypeToken<ArrayList<Konto>>() {}.getType();
             outputList = gson.fromJson(response, listOfMyClassObject);
           //  String size = "Found "+outputList.size()+" Konten";
-           // Log.d("budgetserver",size);
-            setKontoItems(outputList);
+          //  Log.d("budgetserver",outputList.toString());
+            setKontolist(outputList);
             // JsonParser parser = new JsonParser();
 
         }
@@ -96,9 +98,39 @@ public void getKonten(String baseurl){
             Log.d("budgetserver",error.toString());
         }
     });
-    queue.add(stringRequest);
 
+    queue.add(stringRequest);
+    //Hole alle KontoFavoriten
 }
+
+    public void getKontenFavorits(String baseurl){
+        //Hoöe alle Konten
+        RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
+        String url = baseurl+"kontosFavorits";
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                 Log.d("budgetserver","getKontenFavorits");
+                List<KontoFavorits> outputList;
+                Gson gson = new Gson();
+                Type listOfMyClassObject = new TypeToken<ArrayList<KontoFavorits>>() {}.getType();
+                outputList = gson.fromJson(response, listOfMyClassObject);
+                //  String size = "Found "+outputList.size()+" Konten";
+                //  Log.d("budgetserver",outputList.toString());
+              setKontoItems(outputList);
+                // JsonParser parser = new JsonParser();
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("budgetserver",error.toString());
+            }
+        });
+        queue.add(stringRequest);
+        //Hole alle KontoFavoriten
+    }
+
     public void getCategories(String baseurl){
         //Hoöe alle Konten
         RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
@@ -106,7 +138,7 @@ public void getKonten(String baseurl){
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                // Log.d("budgetserver",response);
+                Log.d("budgetserver","getCategories");
                 List<Categorie> outputList;
                 Gson gson = new Gson();
                 Type listOfMyClassObject = new TypeToken<ArrayList<Categorie>>() {}.getType();
@@ -127,16 +159,31 @@ public void getKonten(String baseurl){
 
     }
 
-  public void setKontoItems( List<Konto> outputList){
-      Log.d("budgetserver","Set Konto Items");
+    private void setKontolist ( List<Konto> outputList) {
+
+        Log.d("budgetserver","setKontoList");
+        kontolist=outputList;
+    }
+
+  public void setKontoItems( List<KontoFavorits> outputFavoritList){
+      Log.d("budgetserver","Set Konto Itemst");
+      String str = new String();
+      if (kontolist == null)
+      {
+          Log.e("budgetserver","Kontolist=leer");
+          return;
+      }
+      str=str+kontolist.size();
+      Log.d("budgetserver", str);
         Spinner spinner = findViewById(R.id.KontoField);
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, android.R.id.text1);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(spinnerAdapter);
         //spinnerAdapter.add("value1");
-        for (int i=0;i<outputList.size();i++)
+
+        for (int i=0;i<kontolist.size();i++)
         {
-            spinnerAdapter.add(outputList.get(i).getKontoname());
+            spinnerAdapter.add(kontolist.get(i).getKontoname());
         }
         spinnerAdapter.notifyDataSetChanged();
 
