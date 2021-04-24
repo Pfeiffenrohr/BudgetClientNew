@@ -5,6 +5,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -16,7 +17,6 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.lechner.budgetclient.MainActivity;
 import com.lechner.budgetclient.R;
-import com.lechner.budgetclient.Category;
 
 
 import org.json.JSONObject;
@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Map;
 
 public class CategoryHandler {
+    final int MY_SOCKET_TIMEOUT_MS  = 5000;
     public List<Category> getCategorylist() {
         return Categorylist;
     }
@@ -121,7 +122,10 @@ public class CategoryHandler {
                 }
 
             };
-
+            putRequest.setRetryPolicy(new DefaultRetryPolicy(
+                    MY_SOCKET_TIMEOUT_MS,
+                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
             queue.add(putRequest);
         } catch (Exception ex ){
             System.err.println(ex.getStackTrace());
@@ -154,7 +158,10 @@ public class CategoryHandler {
                 Log.d("budgetserver",error.toString());
             }
         });
-
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                MY_SOCKET_TIMEOUT_MS,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         queue.add(stringRequest);
         //Hole alle CategoryFavoriten
     }
@@ -206,6 +213,10 @@ public class CategoryHandler {
                 Log.d("budgetserver",error.toString());
             }
         });
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                MY_SOCKET_TIMEOUT_MS,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         queue.add(stringRequest);
         //Hole alle CategoryFavoriten
     }

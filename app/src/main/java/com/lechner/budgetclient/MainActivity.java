@@ -9,7 +9,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -22,7 +21,7 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import com.lechner.budgetclient.category.Category;
 import com.lechner.budgetclient.category.CategoryFavorits;
 import com.lechner.budgetclient.category.CategoryHandler;
 import com.lechner.budgetclient.konto.Konto;
@@ -33,13 +32,9 @@ import org.json.JSONObject;
 
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Type;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -63,128 +58,123 @@ public class MainActivity<spinnerAdapter> extends AppCompatActivity {
         //   Bon bon = new Bon();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        context=this;
+        context = this;
         propertyReader = new PropertyReader(context);
         properties = propertyReader.getMyProperties("budget.properties");
-        this.baseurl=properties.getProperty("url");
-        kh.getKonten(baseurl,this);
-       // getKontenFavorits(baseurl);
-        ch.getCategorie(baseurl,this);
+        this.baseurl = properties.getProperty("url");
+        kh.getKonten(baseurl, this);
+        // getKontenFavorits(baseurl);
+        ch.getCategorie(baseurl, this);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void saveTransaction(View view) {
-        Log.d("budgetserver","saveTransaction...");
-        Transaction trans=new Transaction(0,"default",6,0.0,"2011-01-01","partner","beschreibung",0,0,0,"n");
+        Log.d("budgetserver", "saveTransaction...");
+       // Transaction trans = new Transaction(0, "default", 6, 0.0, "2011-01-01", "partner", "beschreibung", 0, 0, 0, "n");
+        Transaction trans = new Transaction();
+        trans.setBeschreibung("");
+        trans.setCycle(0);
+        trans.setKor_id(0);
+        trans.setPartner("");
+        trans.setPlaned("n");
         // TextView textView = (TextView)findViewById(R.id.transaktionField);
+        if (((TextView) findViewById(R.id.transaktionField)).getText().toString().equals("")) {
+            return;
+        }
+        trans.setName("" + ((TextView) findViewById(R.id.transaktionField)).getText());
 
-        trans.setName(""+((TextView)findViewById(R.id.transaktionField)).getText());
-        trans.setWert(new Double(""+((TextView)findViewById(R.id.betragField)).getText()));
-        DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-                .withZone(ZoneId.systemDefault());
-        trans.setDatum( DATE_TIME_FORMATTER.format(new Date().toInstant()));
+        if (((TextView) findViewById(R.id.betragField)).getText().toString().equals("")) {
+            return;
+        }
+        trans.setWert(new Double("" + ((TextView) findViewById(R.id.betragField)).getText()));
+        //  DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+        //          .withZone(ZoneId.systemDefault())
+        //trans.setDatum( DATE_TIME_FORMATTER.format(new Date().toInstant()));
+        String pattern = "yyyy-MM-dd";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        String date = simpleDateFormat.format(new Date());
+        trans.setDatum(date);
         //setzt Kategorie
-        Log.d("budgetserver","setze Categotie...");
-        String cat = ((Spinner)findViewById(R.id.categorieChoice)).getSelectedItem().toString();
-        int catId =0;
-        for (int i=0; i< ch.getCategorylist().size(); i++)
-        {
-            Category categorie= ch.getCategorylist().get(i);
-            if (categorie.getName().equals(cat))
-            {
-                catId=categorie.getId();
+        Log.d("budgetserver", "setze Categotie...");
+        String cat = ((Spinner) findViewById(R.id.categorieChoice)).getSelectedItem().toString();
+        int catId = 0;
+        for (int i = 0; i < ch.getCategorylist().size(); i++) {
+            Category categorie = ch.getCategorylist().get(i);
+            if (categorie.getName().equals(cat)) {
+                catId = categorie.getId();
                 trans.setKategorie(catId);
                 break;
             }
         }
-      //Setze Konto
-        Log.d("budgetserver","setze Konto...");
-        String konto = ((Spinner)findViewById(R.id.KontoField)).getSelectedItem().toString();
-        Log.d("budgetserver",konto);
-        int kontoId =0;
-        for (int i=0; i< kh.getKontolist().size(); i++)
-        {
+        //Setze Konto
+        Log.d("budgetserver", "setze Konto...");
+        String konto = ((Spinner) findViewById(R.id.KontoField)).getSelectedItem().toString();
+        Log.d("budgetserver", konto);
+        int kontoId = 0;
+        for (int i = 0; i < kh.getKontolist().size(); i++) {
 
-            Konto k= kh.getKontolist().get(i);
-            if (k.getKontoname().equals(konto))
-            {
-                kontoId=k.getId();
+            Konto k = kh.getKontolist().get(i);
+            if (k.getKontoname().equals(konto)) {
+                kontoId = k.getId();
                 trans.setKonto_id(kontoId);
                 break;
             }
         }
         sendTransaction(trans);
 
-        setKontoFavorite( kontoId);
-        setCategoryFavorite( catId);
+        setKontoFavorite(kontoId);
+        setCategoryFavorite(catId);
         // Setze Konten Favorite
 
 
         // Log.d("budgetserver", "speichern "+textView.getText());
     }
 
-    private void setKontoFavorite(int  kontoId) {
-        for (int i=0; i< kh.getKontofavoritslist().size(); i++)
-        {
+    private void setKontoFavorite(int kontoId) {
+        for (int i = 0; i < kh.getKontofavoritslist().size(); i++) {
             KontoFavorits kf = kh.getKontofavoritslist().get(i);
-            if (kf.getKonto() == kontoId)
-            {   int hints = kf.getHits() +1;
+            if (kf.getKonto() == kontoId) {
+                int hints = kf.getHits() + 1;
                 kf.setHits(hints);
-                kh.sendKontoFavorits(baseurl,kf,this);
+                kh.sendKontoFavorits(baseurl, kf, this);
                 return;
 
             }
         }
         //Konto war noch nicht in Kontofavorits. Lege ein neues an
-        KontoFavorits kf = new KontoFavorits(kontoId, kontoId,1);
-        kh.sendKontoFavorits(baseurl,kf,this);
+        KontoFavorits kf = new KontoFavorits(kontoId, kontoId, 1);
+        kh.sendKontoFavorits(baseurl, kf, this);
         // Log.d("budgetserver", "speichern "+textView.getText());
     }
 
-    private void setCategoryFavorite(int  catId) {
-        for (int i=0; i< ch.getCategoryfavoritslist().size(); i++)
-        {
+    private void setCategoryFavorite(int catId) {
+        for (int i = 0; i < ch.getCategoryfavoritslist().size(); i++) {
             CategoryFavorits cf = ch.getCategoryfavoritslist().get(i);
-            if (cf.getCategory() == catId)
-            {   int hints = cf.getHits() +1;
+            if (cf.getCategory() == catId) {
+                int hints = cf.getHits() + 1;
                 cf.setHits(hints);
-                ch.sendCategoryFavorits(baseurl,cf,this);
+                ch.sendCategoryFavorits(baseurl, cf, this);
                 return;
 
             }
         }
         //Konto war noch nicht in Kontofavorits. Lege ein neues an
-        CategoryFavorits cf = new CategoryFavorits(catId, catId,1);
-        ch.sendCategoryFavorits (baseurl,cf,this);
+        CategoryFavorits cf = new CategoryFavorits(catId, catId, 1);
+        ch.sendCategoryFavorits(baseurl, cf, this);
         // Log.d("budgetserver", "speichern "+textView.getText());
     }
 
-
-
-
-
-   /* private void setKontolist ( List<Konto> outputList) {
-
-        Log.d("budgetserver","setKontoList");
-        kh.setKontolist(outputList);
-        kh.getKontenFavorits(baseurl,this);
-    }*/
-
-
-
-
-
-    public void sendTransaction(Transaction trans){
+    public void sendTransaction(Transaction trans) {
         try {
-            Log.d("budgetserver","SendTransaction...");
+            Log.d("budgetserver", "SendTransaction...");
             RequestQueue queue = Volley.newRequestQueue(this);
             JSONObject jsonBody = new JSONObject();
             Gson gson = new Gson();
-            final String mRequestBody=  gson.toJson(trans);
+            final String mRequestBody = gson.toJson(trans);
             //jsonBody.put("username", "Shozib@gmail.com");
             //jsonBody.put("password", "Shozib123");
-           // final String mRequestBody = jsonBody.toString();
-            final String url = baseurl+"transaction";
+            // final String mRequestBody = jsonBody.toString();
+            final String url = baseurl + "transaction";
             StringRequest putRequest = new StringRequest(Request.Method.POST, url,
                     new Response.Listener<String>() {
                         @Override
@@ -204,8 +194,8 @@ public class MainActivity<spinnerAdapter> extends AppCompatActivity {
 
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
-                    Map<String,String> params = new HashMap<String, String>();
-                    params.put("Content-Type","application/json");
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("Content-Type", "application/json");
                     return params;
                 }
 
@@ -222,27 +212,28 @@ public class MainActivity<spinnerAdapter> extends AppCompatActivity {
             };
 
             queue.add(putRequest);
-        } catch (Exception ex ){
+        } catch (Exception ex) {
             System.err.println(ex.getStackTrace());
         }
     }
+
     public class PropertyReader {
 
         private Context context;
         private Properties properties;
 
-        public PropertyReader(Context context){
-            this.context=context;
+        public PropertyReader(Context context) {
+            this.context = context;
             properties = new Properties();
         }
 
-        public Properties getMyProperties(String file){
-            try{
+        public Properties getMyProperties(String file) {
+            try {
                 AssetManager assetManager = context.getAssets();
                 InputStream inputStream = assetManager.open(file);
                 properties.load(inputStream);
 
-            }catch (Exception e){
+            } catch (Exception e) {
                 System.out.print(e.getMessage());
             }
 

@@ -1,4 +1,4 @@
-package com.lechner.budgetclient;
+package com.lechner.budgetclient.category;
 
 public class Category {
     private Integer id;

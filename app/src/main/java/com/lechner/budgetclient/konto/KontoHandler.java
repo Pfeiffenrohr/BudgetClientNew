@@ -5,6 +5,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -27,6 +28,7 @@ import java.util.List;
 import java.util.Map;
 
 public class KontoHandler {
+    final int MY_SOCKET_TIMEOUT_MS  = 5000;
     public List<Konto> getKontolist() {
         return kontolist;
     }
@@ -119,7 +121,10 @@ public class KontoHandler {
                 }
 
             };
-
+            putRequest.setRetryPolicy(new DefaultRetryPolicy(
+                    MY_SOCKET_TIMEOUT_MS,
+                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
             queue.add(putRequest);
         } catch (Exception ex ){
             System.err.println(ex.getStackTrace());
@@ -150,7 +155,10 @@ public class KontoHandler {
                 Log.d("budgetserver",error.toString());
             }
         });
-
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                MY_SOCKET_TIMEOUT_MS,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         queue.add(stringRequest);
         //Hole alle KontoFavoriten
     }
@@ -202,6 +210,10 @@ public class KontoHandler {
                 Log.d("budgetserver",error.toString());
             }
         });
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                MY_SOCKET_TIMEOUT_MS,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         queue.add(stringRequest);
         //Hole alle KontoFavoriten
     }
