@@ -1,6 +1,6 @@
 package com.lechner.budgetclient;
 
-public class Categorie {
+public class Category {
     private Integer id;
     private String name;
     private String parent;
@@ -13,8 +13,8 @@ public class Categorie {
 
 
 
-    public Categorie(Integer id, String name, String parent, String description, Double limit_month, Double limit_year, String mode,
-                     Integer active, Integer forecast) {
+    public Category(Integer id, String name, String parent, String description, Double limit_month, Double limit_year, String mode,
+                    Integer active, Integer forecast) {
         super();
         this.id = id;
         this.name = name;
@@ -29,7 +29,7 @@ public class Categorie {
 
 
 
-    public Categorie() {
+    public Category() {
 
     }
 
