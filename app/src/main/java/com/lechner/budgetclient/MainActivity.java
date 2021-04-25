@@ -103,6 +103,9 @@ public class MainActivity<spinnerAdapter> extends AppCompatActivity {
             if (categorie.getName().equals(cat)) {
                 catId = categorie.getId();
                 trans.setKategorie(catId);
+                if (categorie.getMode().equals("ausgabe")) {
+                    trans.setWert(trans.getWert()*-1);
+                }
                 break;
             }
         }
