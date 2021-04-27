@@ -4,6 +4,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -39,6 +40,8 @@ import java.util.Map;
 import java.util.Properties;
 
 public class MainActivity<spinnerAdapter> extends AppCompatActivity {
+    public static final String EXTRA_MESSAGE = "myMessage" ;
+
     //
     //String baseurl = "http://192.168.2.123:8080/";
     // String baseurl = "http://localhost:8092/";
@@ -66,6 +69,16 @@ public class MainActivity<spinnerAdapter> extends AppCompatActivity {
         // getKontenFavorits(baseurl);
         ch.getCategorie(baseurl, this);
     }
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void setDetail(View view) {
+        Log.d("budgetserver", "SetDetails...");
+        Intent intent = new Intent(this, DetailsActivity.class);
+        String message = "myMessage";
+        intent.putExtra(EXTRA_MESSAGE, message);
+        startActivity(intent);
+
+    }
+
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void saveTransaction(View view) {
@@ -127,8 +140,12 @@ public class MainActivity<spinnerAdapter> extends AppCompatActivity {
 
         setKontoFavorite(kontoId);
         setCategoryFavorite(catId);
-        // Setze Konten Favorite
 
+
+        TextView textViewName = findViewById(R.id.transaktionField);
+        textViewName.setText("");
+        TextView textViewBetrag = findViewById(R.id.betragField);
+        textViewBetrag.setText("");
 
         // Log.d("budgetserver", "speichern "+textView.getText());
     }

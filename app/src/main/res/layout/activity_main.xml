@@ -116,6 +116,7 @@
         android:layout_marginStart="204dp"
         android:layout_marginLeft="204dp"
         android:layout_marginTop="272dp"
+        android:onClick="setDetail"
         android:text="@string/details"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" /><![CDATA[
